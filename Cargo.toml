@@ -1,0 +1,10 @@
+[package]
+name = "lookupmap-near"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+near-sdk-4 = {package = "near-sdk", version="4.0.0-pre.2"}
+near-sdk-3 = {package = "near-sdk", version="3.1.0"}
