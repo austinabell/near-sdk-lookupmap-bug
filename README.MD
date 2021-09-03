@@ -1,1 +1,1 @@
-![](Screenshot 2021-09-03 at 17.27.35.png)
+![](./Screenshot 2021-09-03 at 17.27.35.png)
