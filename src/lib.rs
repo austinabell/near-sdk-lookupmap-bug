@@ -16,11 +16,13 @@ mod tests {
             us.insert(&uid);
             l.insert(&aid, &us);
             println!("Hello, world!");
-            let v = l.get(&aid).unwrap();
+            let mut v = l.get(&aid).unwrap();
             v.iter().for_each(|x|{
                 println!("{}",x);
             });
-            us.remove(&uid);
+            // ! Can't use us to delete here because it is being read from v
+            // us.remove(&uid);
+            v.remove(&uid);
             v.iter().for_each(|x|{
                 println!("{}",x);
             });
@@ -28,35 +30,32 @@ mod tests {
     }
 
     mod near_sdk_3 {
-        use near_sdk_3::json_types::ValidAccountId;
-        use near_sdk_3::collections::{LookupMap, UnorderedSet};
-        use near_sdk_3::{MockedBlockchain, env};
+        use near_sdk::json_types::ValidAccountId;
+        use near_sdk::collections::{LookupMap, UnorderedSet};
+        use near_sdk::{MockedBlockchain, env, testing_env};
         use std::convert::TryFrom;
+        use near_sdk::test_utils::VMContextBuilder;
 
         #[test]
         fn empty_lookup_maps() {
-            // let blockchain_interface =
-            //     env::take_blockchain_interface().expect("Blockchain interface is not set");
-            // let logs = blockchain_interface
-            //     .as_mocked_blockchain()
-            //     .expect("MockedBlockchain interface expected")
-            //     .logs();
-            // env::set_blockchain_interface(blockchain_interface);
-            // let uid = 4u64;
-            // let aid = ValidAccountId::try_from("few").unwrap();
-            // let mut l:LookupMap<ValidAccountId,UnorderedSet<u64>> = LookupMap::new(b"e".to_vec());
-            // let mut us:UnorderedSet<u64> = UnorderedSet::new(b"dw".to_vec());
-            // us.insert(&uid);
-            // l.insert(&aid, &us);
-            // println!("Hello, world!");
-            // let v = l.get(&aid).unwrap();
-            // v.iter().for_each(|x|{
-            //     println!("{}",x);
-            // });
+            testing_env!(VMContextBuilder::new().build());
+            let uid = 4u64;
+            let aid = ValidAccountId::try_from("a.testnet").unwrap();
+            let mut l:LookupMap<ValidAccountId,UnorderedSet<u64>> = LookupMap::new(b"e".to_vec());
+            let mut us:UnorderedSet<u64> = UnorderedSet::new(b"dw".to_vec());
+            us.insert(&uid);
+            l.insert(&aid, &us);
+            println!("Hello, world!");
+            let mut v = l.get(&aid).unwrap();
+            v.iter().for_each(|x|{
+                println!("{}",x);
+            });
+            // ! Can't use us to delete here because it is being read from v
             // us.remove(&uid);
-            // v.iter().for_each(|x|{
-            //     println!("{}",x);
-            // });
+            v.remove(&uid);
+            v.iter().for_each(|x|{
+                println!("{}",x);
+            });
         }
     }
 

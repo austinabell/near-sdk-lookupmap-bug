@@ -7,4 +7,4 @@ edition = "2018"
 
 [dependencies]
 near-sdk-4 = {package = "near-sdk", version="4.0.0-pre.2"}
-near-sdk-3 = {package = "near-sdk", version="3.1.0"}
+near-sdk = {package = "near-sdk", version="3.1.0"}
